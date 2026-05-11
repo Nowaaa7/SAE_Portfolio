@@ -85,25 +85,6 @@ def delete_skill(id):
     db.session.delete(comp)
     db.session.commit()
     # Message de confirmation (optionnel)
-    return redirect(url_for('admin_dashboard'))
-
-@app.route('/add_skill', methods=['POST'])
-@login_required
-def add_skill():
-    # On récupère ce que tu as tapé dans le formulaire
-    code = request.form.get('code')
-    nom = request.form.get('nom')
-    niveau = request.form.get('niveau')
-    
-    # On cherche le premier bloc par défaut (Administrer les réseaux)
-    from models import Bloc
-    bloc_par_defaut = Bloc.query.first()
-    
-    # On crée et on sauvegarde la nouvelle compétence
-    nouvelle_comp = Competence(code=code, nom=nom, niveau=niveau, bloc_id=bloc_par_defaut.id)
-    db.session.add(nouvelle_comp)
-    db.session.commit()
-    
     return redirect(url_for('admin_dashboard'))    
 
 @app.route('/login', methods=['GET', 'POST'])
