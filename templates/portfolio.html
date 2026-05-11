@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Noa Jodry — Mes Projets & Compétences{% endblock %}
+
+{% block content %}
+<header class="text-center mb-5 reveal">
+  <h1 class="text-primary display-5 fw-bold">Portfolio de Compétences</h1>
+  <p class="lead">Parcours détaillé : Réseaux, Systèmes, Cybersécurité & Développement.</p>
+</header>
+
+<div class="row g-4 mb-5">
+  <div class="col-12 reveal delay-1">
+    <div class="card p-4 hover-raise">
+      <h3 class="h5 text-muted border-bottom border-secondary pb-2 mb-3">1. Découverte de la programmation (NSI)</h3>
+      <p class="text-primary fw-bold mb-3">Compétence : Comprendre les bases de la logique informatique</p>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <strong>Savoir :</strong> Algorithmique de base, variables (int, float, list), boucles et conditions.
+        </div>
+        <div class="col-md-4 mb-3">
+          <strong>Savoir-faire :</strong> Écriture de scripts Python simples, utilisation d'IDE (Thonny, VSCode), débogage élémentaire.
+        </div>
+        <div class="col-md-4 mb-3">
+          <strong>Savoir-être :</strong> Rigueur syntaxique, persévérance face aux erreurs de compilation.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 reveal delay-2">
+    <div class="card p-4 hover-raise">
+      <h3 class="h5 text-muted border-bottom border-secondary pb-2 mb-3">2. Architecture LAN Commutée</h3>
+      <p class="text-primary fw-bold mb-3">Compétence : Segmenter un réseau local</p>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <strong>Savoir :</strong> Norme 802.1Q (Tagging), concept de domaines de diffusion, sécurité des ports.
+        </div>
+        <div class="col-md-4 mb-3">
+          <strong>Savoir-faire :</strong> Création de VLANs, configuration des liens Trunk et Access, routage inter-VLAN (RoAS).
+        </div>
+        <div class="col-md-4 mb-3">
+          <strong>Savoir-être :</strong> Logique de segmentation, anticipation des besoins de sécurité.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="text-center mb-4 mt-5 reveal">
+  <h2 class="text-primary h2 fw-bold">Projets Académiques (SAE)</h2>
+</header>
+
+<div class="row g-4">
+  <div class="col-12 reveal delay-1">
+    <div class="card p-4 hover-raise">
+      <h3 class="h4">Conception d'un réseau d'entreprise (SAE 1.02)</h3>
+      <p class="text-primary fw-bold mb-3">Janvier 2026 | Administration Réseaux</p>
+      <ul>
+        <li><strong>Architecture :</strong> Conception d'une topologie intégrant des routeurs (Cisco 800) et commutateurs (Cisco 2960).</li>
+        <li><strong>Segmentation :</strong> Mise en œuvre de VLANs dédiés (Admin, Personnel, Production, Vidéo) pour isoler les flux.</li>
+        <li><strong>Services :</strong> Élaboration du plan d'adressage IPv4 et configuration des services DHCP et DNS.</li>
+        <li><strong>Virtualisation :</strong> Maquettage de l'infrastructure via simulation et machines virtuelles.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-12 reveal delay-2">
+    <div class="card p-4 hover-raise">
+      <h3 class="h4">Automatisation et Traitement de Données (SAE 1.05)</h3>
+      <p class="text-primary fw-bold mb-3">Février 2026 | Programmation Python</p>
+      <ul>
+        <li><strong>Scripting :</strong> Développement de scripts Python pour automatiser la récupération de données Open Data.</li>
+        <li><strong>Traitement :</strong> Parsing de fichiers CSV, nettoyage des données et conversion au format JSON.</li>
+        <li><strong>Collaboration :</strong> Pilotage du projet en équipe via GitLab (issues, versioning, documentation README).</li>
+        <li><strong>Communication :</strong> Présentation orale et démonstration technique du script devant un jury.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-6 reveal delay-3">
+    <div class="card p-4 hover-raise h-100">
+      <h3 class="h5">Caractérisation de supports (SAE 1.03)</h3>
+      <p class="text-primary small mb-3">Décembre 2025 | Télécoms</p>
+      <ul class="small">
+        <li>Modélisation de lignes de transmission sous <strong>LTspice</strong> (Ethernet Cat6, Coaxial).</li>
+        <li>Étude des phénomènes d'atténuation et de retard de propagation.</li>
+        <li>Utilisation de <strong>MATLAB / Simulink</strong> pour observer l'impact de la longueur du câble sur le signal.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-6 reveal delay-3">
+    <div class="card p-4 hover-raise h-100">
+      <h3 class="h5">Portfolio Numérique (SAE 1.04)</h3>
+      <p class="text-primary small mb-3">Février 2026 | Développement Web</p>
+      <ul class="small">
+        <li>Conception d'un site web responsive en <strong>HTML5 / CSS3</strong> (Framework Bootstrap).</li>
+        <li>Implémentation d'une identité visuelle "Cyber Dark".</li>
+        <li>Hébergement et mise en ligne via <strong>GitHub Pages</strong>.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Administration des Compétences</h1>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Déconnexion</a>
+</div>
+
+<div class="card p-4 shadow-lg mb-5">
+    <h3>Modifier mes niveaux</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Nom</th>
+                <th>Niveau actuel</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for semestre in semestres %}
+                {% for bloc in semestre.blocs %}
+                    {% for comp in bloc.competences %}
+                    <tr>
+                        <td>{{ comp.code }}</td>
+                        <td>{{ comp.nom }}</td>
+                        <td><span class="badge bg-primary">{{ comp.niveau }}</span></td>
+                        <td>
+                            <form action="{{ url_for('update_skill', id=comp.id) }}" method="POST" class="d-flex gap-2">
+                                <select name="niveau" class="form-select form-select-sm">
+                                    <option value="non acquis">Non acquis</option>
+                                    <option value="en cours d'acquisition">En cours</option>
+                                    <option value="presque acquis">Presque acquis</option>
+                                    <option value="acquis">Acquis</option>
+                                    <option value="expert">Expert</option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-success">Valider</button>
+                            </form>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <!-- Formulaire de modification existant -->
+                                <form action="{{ url_for('update_skill', id=comp.id) }}" method="POST" class="d-flex gap-2">
+                                    <!-- ... ton select niveau ... -->
+                                    <button type="submit" class="btn btn-sm btn-success">Modifier</button>
+                                </form>
+
+                                <!-- Nouveau formulaire de suppression -->
+                                <form action="{{ url_for('delete_skill', id=comp.id) }}" method="POST" 
+                                      onsubmit="return confirm('Es-tu sûr de vouloir supprimer cette compétence ?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

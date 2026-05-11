@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Noa Jodry — Mentions Légales{% endblock %}
+
+{% block content %}
+<header class="text-center mb-5 reveal">
+  <h1>Mentions Légales</h1>
+</header>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8 reveal delay-1">
+    
+    <div class="card p-4 p-md-5 shadow-lg">
+        
+        <section class="mb-4">
+          <h3 class="h5 text-primary">1. Éditeur du site</h3>
+          <p>Ce site est un portfolio personnel édité par :</p>
+          <p>
+            <strong>Noa Jodry</strong><br>
+            <strong>Directeur de la publication :</strong> Noa Jodry<br>
+            <strong>Contact :</strong> <a href="mailto:noajodry7@gmail.com">noajodry7@gmail.com</a>
+          </p>
+        </section>
+
+        <section class="mb-4">
+          <h3 class="h5 text-primary">2. Hébergement</h3>
+          <p>Ce site est hébergé dans le cadre d'un projet académique (SAE) via un conteneur Docker.</p>
+        </section>
+
+        <section class="mb-4">
+          <h3 class="h5 text-primary">3. Propriété intellectuelle</h3>
+          <p>Sauf mention contraire, l'ensemble des contenus de ce site (textes, images, code source, design) sont la propriété intellectuelle de Noa Jodry. Toute reproduction ou représentation totale ou partielle de ce site est interdite sans autorisation expresse et préalable.</p>
+        </section>
+
+        <section class="mb-4">
+          <h3 class="h5 text-primary">4. Données personnelles</h3>
+          <p>Ce site est un projet étudiant. Il ne collecte aucune donnée personnelle à des fins commerciales et n'utilise aucun cookie de suivi (tracking)[cite: 5].</p>
+        </section>
+        
+        <section class="mb-4">
+          <h3 class="h5 text-primary">5. Crédits</h3>
+          <p>Ce site a été conçu et développé par Noa Jodry. Il utilise les technologies suivantes :</p>
+          <ul>
+            <li><strong>Flask</strong> (Framework Python)[cite: 1]</li>
+            <li><strong>Bootstrap 5</strong> (Framework CSS)[cite: 5]</li>
+            <li><strong>PostgreSQL</strong> (Base de données)[cite: 1]</li>
+          </ul>
+        </section>
+
+        <div class="text-center mt-4">
+          <!-- Utilisation de url_for pour le lien de retour -->
+          <a href="{{ url_for('index') }}" class="btn btn-outline-primary">Retour à l'accueil</a>
+        </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}

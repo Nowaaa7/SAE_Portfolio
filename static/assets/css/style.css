@@ -1,0 +1,300 @@
+/* =========================================
+   VARIABLES & THÈMES
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* --- TYPOGRAPHIE --- */
+    --font-main: 'Poppins', sans-serif;
+
+    /* --- THÈME PAR DÉFAUT (SOMBRE / ROUGE) --- */
+    --primary-color: #ff0f2f;       /* Rouge Néon */
+    --secondary-color: #d0001f;     /* Rouge Foncé */
+    --bg-body: #000000;             
+    --bg-card: rgba(20, 20, 20, 0.7); 
+    --text-main: #f8f9fa;           
+    --text-muted: #b0b3b8;          
+    --border-color: rgba(255, 255, 255, 0.1);
+    
+    /* Animation SOMBRE (Plus visible) */
+    --bg-gradient: linear-gradient(-45deg, #000000, #2b0005, #5c0011, #000000);
+}
+
+/* --- THÈME CLAIR (BLANC / BLEU FONCÉ) --- */
+[data-theme="light"] {
+    --primary-color: #0056b3;       
+    --secondary-color: #004494;     
+    --bg-body: #ffffff;             
+    --bg-card: rgba(255, 255, 255, 0.85); 
+    --text-main: #212529;           
+    --text-muted: #6c757d;          
+    --border-color: rgba(0, 0, 0, 0.1);
+
+    /* Animation CLAIRE (Plus visible) */
+    --bg-gradient: linear-gradient(-45deg, #ffffff, #d6eaff, #b3d7ff, #ffffff);
+}
+
+/* =========================================
+   CONFIGURATION BODY (ANIMATION)
+   ========================================= */
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-main);
+    color: var(--text-main) !important;
+    overflow-x: hidden;
+    min-height: 100vh;
+
+    /* APPLICATION DE L'ANIMATION */
+    background: var(--bg-gradient) !important; 
+    background-size: 400% 400% !important;
+    animation: dark-breath 12s ease infinite; 
+}
+/* =========================================
+   LIGHTBOX (Zoom sur image)
+   ========================================= */
+/* Style pour indiquer que l'image est cliquable */
+.zoomable-image {
+    cursor: zoom-in;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.zoomable-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(255, 15, 47, 0.4);
+}
+[data-theme="light"] .zoomable-image:hover {
+    box-shadow: 0 5px 15px rgba(0, 86, 179, 0.4);
+}
+
+/* Le fond noir semi-transparent qui prend tout l'écran */
+#lightbox {
+    display: none; /* Caché par défaut */
+    position: fixed;
+    z-index: 9999; /* Au-dessus de tout le reste */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+}
+
+/* L'image agrandie au centre */
+#lightbox img {
+    max-width: 90%;
+    max-height: 90vh;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    /* Petite animation d'apparition */
+    animation: fadeInZoom 0.3s ease; 
+}
+
+@keyframes fadeInZoom {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Le bouton pour fermer (la croix en haut à droite) */
+#lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+#lightbox-close:hover {
+    color: var(--primary-color);
+}
+/* La grille "Réseau" qui couvre tout le site */
+body::before {
+    content: "";
+    position: fixed; 
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: -1; 
+}
+
+/* Grille noire pour le mode clair */
+[data-theme="light"] body::before {
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px) !important;
+}
+
+@keyframes dark-breath {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+::selection { background: var(--primary-color); color: #ffffff; }
+
+/* =========================================
+   OVERRIDES BOOTSTRAP 
+   ========================================= */
+.text-primary { color: var(--primary-color) !important; }
+.bg-primary { background-color: var(--primary-color) !important; }
+.text-danger { color: var(--primary-color) !important; }
+.border-danger { border-color: var(--primary-color) !important; }
+.text-muted { color: var(--text-muted) !important; }
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: white !important;
+}
+.btn-primary:hover {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+}
+.btn-outline-primary {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+.btn-outline-primary:hover {
+    background-color: var(--primary-color) !important;
+    color: #ffffff !important;
+}
+.btn-outline-light {
+    color: var(--text-main) !important;
+    border-color: var(--border-color) !important;
+}
+.btn-outline-light:hover {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #ffffff !important;
+}
+
+a { color: var(--primary-color); text-decoration: none; transition: 0.3s; }
+a:hover { color: var(--secondary-color); }
+p, h1, h2, h3, h4, h5, h6, li, span, div { color: inherit; }
+
+/* =========================================
+   NAVIGATION (Navbar)
+   ========================================= */
+#mainNavbar {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+}
+[data-theme="light"] #mainNavbar { background: rgba(255, 255, 255, 0.9); }
+
+.navbar-brand { font-weight: 700; letter-spacing: 1px; color: var(--text-main) !important; }
+.navbar-brand:hover { color: var(--primary-color) !important; }
+
+.nav-link { font-weight: 500; margin-left: 1rem; position: relative; color: var(--text-main) !important; }
+.nav-link:hover, .nav-link.active { color: var(--primary-color) !important; }
+.nav-link::after {
+    content: ''; position: absolute; width: 0; height: 2px;
+    bottom: -5px; left: 0; background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+.nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+/* =========================================
+   CARTES & ÉLÉMENTS
+   ========================================= */
+.card, .profile-card, .sticky-card {
+    background-color: var(--bg-card) !important;
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    color: var(--text-main) !important;
+}
+.profile-card, .sticky-card { padding: 2rem; text-align: center; }
+.sticky-card { position: sticky; top: 100px; }
+
+.profile-img {
+    width: 130px; height: 130px; border-radius: 50%;
+    object-fit: cover; border: 3px solid var(--primary-color);
+    padding: 3px; background-color: var(--bg-body);
+}
+
+.card:hover, .profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 15, 47, 0.15);
+    border-color: var(--primary-color) !important;
+}
+
+[data-theme="light"] .card:hover { box-shadow: 0 10px 30px rgba(0, 86, 179, 0.15); }
+
+/* Timeline CV */
+.timeline-item {
+    border-left: 2px solid var(--border-color);
+    padding-left: 1.5rem; padding-bottom: 2rem; position: relative;
+}
+.timeline-item::before {
+    content: ''; position: absolute; left: -6px; top: 5px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+/* Boutons réseaux sociaux */
+.social-btn {
+    width: 40px; height: 40px; display: inline-flex;
+    align-items: center; justify-content: center;
+    border-radius: 50%; background: var(--border-color);
+    color: var(--text-main);
+    transition: all 0.3s ease; border: 1px solid transparent;
+}
+.social-btn:hover {
+    background: var(--primary-color); color: white;
+    box-shadow: 0 0 15px rgba(255, 15, 47, 0.4); transform: translateY(-3px);
+}
+[data-theme="light"] .social-btn:hover { box-shadow: 0 0 15px rgba(0, 86, 179, 0.4); }
+
+/* Utilitaires */
+.name-gradient {
+    background: linear-gradient(45deg, var(--text-main), var(--primary-color));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero { min-height: 100vh; padding-top: 80px; position: relative; background: transparent; }
+.site-footer { background: transparent; border-top: 1px solid var(--border-color); padding: 1.5rem 0; font-size: 0.9rem; }
+.reveal { opacity: 1; transform: translateY(0); transition: all 0.8s ease; }
+.delay-1 { transition-delay: 0.2s; } .delay-2 { transition-delay: 0.4s; }
+
+/* Responsive */
+@media (max-width: 991px) {
+    #mainNavbar { background: var(--bg-card); }
+    .navbar-collapse { padding-top: 1rem; }
+    .nav-link { margin: 0.5rem 0; }
+    .navbar-nav .btn, .navbar-nav button { width: 100%; margin: 0.5rem 0 !important; text-align: center; }
+}
+    .hero { text-align: center; padding-top: 120px; }
+    .hero h1 { font-size: 2.5rem; }
+    .profile-card { margin-top: 3rem; }
+}
+/* =========================================
+   OVERRIDES ONGLETS (Nav Pills)
+   ========================================= */
+/* Onglet sélectionné (actif) en rouge */
+.nav-pills .nav-link.active, 
+.nav-pills .show > .nav-link {
+    background-color: var(--primary-color) !important;
+    color: #ffffff !important;
+}
+
+/* Couleur du texte des onglets non sélectionnés */
+.nav-pills .nav-link {
+    color: var(--text-main) !important;
+}
+
+/* Couleur au survol d'un onglet non sélectionné */
+.nav-pills .nav-link:hover:not(.active) {
+    color: var(--primary-color) !important;
+    background-color: rgba(255, 15, 47, 0.1); /* Léger fond rouge transparent */
+}
