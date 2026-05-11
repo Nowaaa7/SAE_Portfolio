@@ -5,24 +5,6 @@ from werkzeug.security import generate_password_hash
 with app.app_context():
     print("Vérification de la base de données...")
     
-    # 1. Vérifier et créer le Semestre
-    s1 = Semestre.query.filter_by(nom="Semestre 1").first()
-    if not s1:
-        s1 = Semestre(nom="Semestre 1")
-        db.session.add(s1)
-        db.session.commit()
-        print(" -> Semestre 1 ajouté")
-
-    # 2. Vérifier et créer le Bloc
-    b1 = Bloc.query.filter_by(nom="Administrer les réseaux").first()
-    if not b1:
-        b1 = Bloc(nom="Administrer les réseaux", semestre_id=s1.id)
-        db.session.add(b1)
-        db.session.commit()
-        print(" -> Bloc ajouté")
-
-
-    # 4. Vérifier et créer l'Admin
     admin = User.query.filter_by(username="admin").first()
     if not admin:
         admin = User(
