@@ -17,7 +17,12 @@
             <h3 class="h5 mb-0">{{ bloc.code }} : {{ bloc.nom }}</h3>
           </div>
           
-          <div class="card-body">
+          <div class="card bg-dark text-white border-danger mb-3" style="background-color: #1a1a1a !important;">
+              <div class="card-body">
+                  <h5 class="card-title text-danger">{{ comp.code }}</h5>
+                  <p class="card-text">{{ comp.nom }}</p>
+                  </div>
+          </div>
             <div class="row g-3">
               {% for comp in bloc.competences %}
                 <div class="col-md-6">

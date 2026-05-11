@@ -131,5 +131,38 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/add_semester', methods=['POST'])
+@login_required
+def add_semester():
+    nom = request.form.get('nom')
+    nouveau_s = Semestre(nom=nom)
+    db.session.add(nouveau_s)
+    db.session.commit()
+    return redirect(url_for('admin_dashboard'))
+
+@app.route('/add_block', methods=['POST'])
+@login_required
+def add_block():
+    nom = request.form.get('nom')
+    semestre_id = request.form.get('semestre_id')
+    nouveau_b = Bloc(nom=nom, semestre_id=semestre_id)
+    db.session.add(nouveau_b)
+    db.session.commit()
+    return redirect(url_for('admin_dashboard'))
+
+# Modifie aussi ton ancienne route add_skill pour qu'elle accepte le bloc_id du formulaire
+@app.route('/add_skill', methods=['POST'])
+@login_required
+def add_skill():
+    code = request.form.get('code')
+    nom = request.form.get('nom')
+    niveau = request.form.get('niveau')
+    bloc_id = request.form.get('bloc_id') # On récupère le bloc choisi
+    
+    nouvelle_comp = Competence(code=code, nom=nom, niveau=niveau, bloc_id=bloc_id)
+    db.session.add(nouvelle_comp)
+    db.session.commit()
+    return redirect(url_for('admin_dashboard'))
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,67 +1,101 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="container mt-5 pt-5">
-    <h1 class="text-danger mb-4 fw-bold">Administration des Compétences</h1>
-    <div class="card bg-dark text-white border-danger mb-5 shadow">
-        <div class="card-header border-danger fw-bold">
-            ➕ Ajouter une nouvelle compétence
+<div class="container mt-5 pt-5 text-white">
+    <h1 class="text-danger fw-bold mb-5">Configuration du Portfolio</h1>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card bg-dark border-danger h-100">
+                <div class="card-header border-danger text-danger fw-bold">1. Créer un Semestre</div>
+                <div class="card-body">
+                    <form action="{{ url_for('add_semester') }}" method="POST">
+                        <input type="text" name="nom" class="form-control bg-dark text-white border-secondary mb-2" placeholder="ex: Semestre 1" required>
+                        <button class="btn btn-danger w-100">Créer</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <form action="{{ url_for('add_skill') }}" method="POST">
-                <div class="row align-items-end">
-                    <div class="col-md-2 mb-3">
-                        <label class="form-label text-secondary">Code</label>
-                        <input type="text" class="form-control bg-dark text-white border-secondary" name="code" placeholder="ex: AC 11.01" required>
-                    </div>
-                    <div class="col-md-5 mb-3">
-                        <label class="form-label text-secondary">Nom de la compétence</label>
-                        <input type="text" class="form-control bg-dark text-white border-secondary" name="nom" placeholder="Description de la compétence" required>
-                    </div>
-                    <div class="col-md-2 mb-3">
-                        <label class="form-label text-secondary">Niveau</label>
-                        <select class="form-select bg-dark text-white border-secondary" name="niveau">
+
+        <div class="col-md-4 mb-4">
+            <div class="card bg-dark border-danger h-100">
+                <div class="card-header border-danger text-danger fw-bold">2. Créer un Bloc (RT)</div>
+                <div class="card-body">
+                    <form action="{{ url_for('add_block') }}" method="POST">
+                        <select name="semestre_id" class="form-select bg-dark text-white border-secondary mb-2" required>
+                            <option value="">Choisir Semestre...</option>
+                            {% for s in semestres %}
+                            <option value="{{ s.id }}">{{ s.nom }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" name="nom" class="form-control bg-dark text-white border-secondary mb-2" placeholder="ex: Administrer les réseaux" required>
+                        <button class="btn btn-danger w-100">Créer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card bg-dark border-danger h-100">
+                <div class="card-header border-danger text-danger fw-bold">3. Ajouter une Compétence</div>
+                <div class="card-body">
+                    <form action="{{ url_for('add_skill') }}" method="POST">
+                        <select name="bloc_id" class="form-select bg-dark text-white border-secondary mb-2" required>
+                            <option value="">Choisir le Bloc...</option>
+                            {% for b in blocs %}
+                            <option value="{{ b.id }}">{{ b.semestre.nom }} - {{ b.nom }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" name="code" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Code (AC 11.01)" required>
+                        <input type="text" name="nom" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Nom compétence" required>
+                        <select name="niveau" class="form-select bg-dark text-white border-secondary mb-2">
                             <option value="non acquis">Non acquis</option>
                             <option value="en cours">En cours</option>
                             <option value="acquis">Acquis</option>
                         </select>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <button type="submit" class="btn btn-success w-100 fw-bold">Ajouter</button>
-                    </div>
+                        <button class="btn btn-success w-100">Ajouter</button>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
-    <h3 class="text-white mb-3">Compétences existantes</h3>
-    <ul class="list-group">
-        {% for comp in competences %}
-        <li class="list-group-item bg-dark border-secondary d-flex justify-content-between align-items-center">
-            
-            <div>
-                <span class="badge bg-danger me-2">{{ comp.code }}</span>
-                <span class="text-white">{{ comp.nom }}</span>
-            </div>
-
-            <div class="d-flex align-items-center">
-                
-                <form action="{{ url_for('update_skill', id=comp.id) }}" method="POST" class="d-flex me-3">
-                    <select name="niveau" class="form-select form-select-sm bg-dark text-white border-secondary me-2">
-                        <option value="non acquis" {% if comp.niveau == 'non acquis' %}selected{% endif %}>Non acquis</option>
-                        <option value="en cours" {% if comp.niveau == 'en cours' %}selected{% endif %}>En cours</option>
-                        <option value="acquis" {% if comp.niveau == 'acquis' %}selected{% endif %}>Acquis</option>
-                    </select>
-                    <button type="submit" class="btn btn-warning btn-sm">Modifier</button>
-                </form>
-
-                <form action="{{ url_for('delete_skill', id=comp.id) }}" method="POST" onsubmit="return confirm('Vraiment supprimer cette compétence ?');">
-                    <button type="submit" class="btn btn-outline-danger btn-sm">🗑️</button>
-                </form>
-
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
+    <div class="mt-5">
+        <h3 class="text-danger">Gestion des éléments existants</h3>
+        <table class="table table-dark table-hover border-secondary mt-3">
+            <thead>
+                <tr>
+                    <th>Semestre</th>
+                    <th>Bloc</th>
+                    <th>Code</th>
+                    <th>Niveau</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comp in competences %}
+                <tr>
+                    <td>{{ comp.bloc.semestre.nom }}</td>
+                    <td>{{ comp.bloc.nom }}</td>
+                    <td><span class="badge bg-danger">{{ comp.code }}</span></td>
+                    <td>
+                        <form action="{{ url_for('update_skill', id=comp.id) }}" method="POST" class="d-flex">
+                            <select name="niveau" class="form-select form-select-sm bg-dark text-white border-secondary me-2">
+                                <option value="non acquis" {% if comp.niveau == 'non acquis' %}selected{% endif %}>Non acquis</option>
+                                <option value="en cours" {% if comp.niveau == 'en cours' %}selected{% endif %}>En cours</option>
+                                <option value="acquis" {% if comp.niveau == 'acquis' %}selected{% endif %}>Acquis</option>
+                            </select>
+                            <button class="btn btn-warning btn-sm">OK</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('delete_skill', id=comp.id) }}" method="POST">
+                            <button class="btn btn-outline-danger btn-sm">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}
