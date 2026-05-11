@@ -21,18 +21,6 @@ with app.app_context():
         db.session.commit()
         print(" -> Bloc ajouté")
 
-    # 3. Vérifier et créer la Compétence
-    c1 = Competence.query.filter_by(code="AC 11.02").first()
-    if not c1:
-        c1 = Competence(
-            code="AC 11.02",
-            nom="Exploiter des systèmes d'exploitation serveurs",
-            niveau="acquis",
-            bloc_id=b1.id
-        )
-        db.session.add(c1)
-        db.session.commit()
-        print(" -> Compétence ajoutée")
 
     # 4. Vérifier et créer l'Admin
     admin = User.query.filter_by(username="admin").first()
