@@ -39,7 +39,7 @@ with app.app_context():
     if not admin:
         admin = User(
             username="admin",
-            password=generate_password_hash("admin123")
+            mdp=generate_password_hash("admin123")
         )
         db.session.add(admin)
         db.session.commit()

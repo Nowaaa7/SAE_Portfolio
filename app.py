@@ -98,7 +98,7 @@ def login():
         user = User.query.filter_by(username=form_username).first()
         
         # Si l'utilisateur existe et que le mot de passe correspond
-        if user and check_password_hash(user.password, form_password):
+        if user and check_password_hash(user.mdp, form_password):
             login_user(user)
             return redirect(url_for('index')) # Ou vers une page '/admin' si tu en as une
         else:
