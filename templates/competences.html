@@ -17,11 +17,17 @@
             <h3 class="h5 mb-0">{{ bloc.code }} : {{ bloc.nom }}</h3>
           </div>
           
-          <div class="card bg-dark text-white border-danger mb-3" style="background-color: #1a1a1a !important;">
+          <div class="card border-danger mb-4" style="background-color: #1a1a1a !important; color: white !important; border-width: 2px;">
               <div class="card-body">
-                  <h5 class="card-title text-danger">{{ comp.code }}</h5>
-                  <p class="card-text">{{ comp.nom }}</p>
+                  <h5 class="card-title text-danger fw-bold">{{ comp.code }}</h5>
+                  <p class="card-text text-white">{{ comp.nom }}</p>
+        
+                  <div class="progress bg-secondary" style="height: 10px;">
+                      {% set pct = {'acquis': 100, 'en cours': 50, 'non acquis': 10}.get(comp.niveau, 0) %}
+                      <div class="progress-bar bg-danger" style="width: {{ pct }}%"></div>
                   </div>
+                  <small class="text-secondary mt-2 d-block">Statut : {{ comp.niveau }}</small>
+              </div>
           </div>
             <div class="row g-3">
               {% for comp in bloc.competences %}
