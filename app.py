@@ -50,11 +50,14 @@ def portfolio():
     return render_template('portfolio.html')
 
 @app.route('/competences')
-def competences():
-    # On récupère tous les semestres, et grâce aux "relationships" dans models.py,
-    # on aura accès aux blocs et aux compétences liés.
-    tous_les_semestres = Semestre.query.all()
-    return render_template('competences.html', semestres=tous_les_semestres)
+def competences_page():
+    from models import Semestre, Competence
+    # On récupère les semestres (qui contiennent les blocs, qui contiennent les compétences)
+    semestres = Semestre.query.all()
+    # Ou si ton template boucle sur 'competences' directement :
+    competences = Competence.query.all()
+    
+    return render_template('competences.html', semestres=semestres, competences=competences)
 
 @app.route('/mentions_legales')
 def mentions_legales():

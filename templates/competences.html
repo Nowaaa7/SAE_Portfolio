@@ -1,70 +1,45 @@
 {% extends "base.html" %}
 
 {% block content %}
-<header class="text-center mb-5">
-  <h1 class="text-primary fw-bold">Mes Compétences (Dynamique)</h1>
-</header>
+<div class="container mt-5 pt-5 text-white">
+    <h1 class="text-danger fw-bold mb-5 text-center">Mes Compétences (Dynamique)</h1>
 
-<div class="row justify-content-center">
-  <div class="col-lg-10">
-    
-    {% for semestre in semestres %}
-      <h2 class="mt-5 text-uppercase text-danger border-bottom">{{ semestre.nom }} ({{ semestre.code }})</h2>
-      
-      {% for bloc in semestre.blocs %}
-        <div class="card shadow-sm mb-4 mt-3">
-          <div class="card bg-dark text-white border-danger mb-3">
-            <h3 class="h5 mb-0">{{ bloc.code }} : {{ bloc.nom }}</h3>
-          </div>
-          
-          <div class="card border-danger mb-4" style="background-color: #1a1a1a !important; color: white !important; border-width: 2px;">
-              <div class="card-body">
-                  <h5 class="card-title text-danger fw-bold">{{ comp.code }}</h5>
-                  <p class="card-text text-white">{{ comp.nom }}</p>
-        
-                  <div class="progress bg-secondary" style="height: 10px;">
-                      {% set pct = {'acquis': 100, 'en cours': 50, 'non acquis': 10}.get(comp.niveau, 0) %}
-                      <div class="progress-bar bg-danger" style="width: {{ pct }}%"></div>
-                  </div>
-                  <small class="text-secondary mt-2 d-block">Statut : {{ comp.niveau }}</small>
-              </div>
-          </div>
-            <div class="row g-3">
-              {% for comp in bloc.competences %}
-                <div class="col-md-6">
-                  <div class="p-3 border rounded bg-light">
-                    <span class="badge bg-primary mb-2">{{ comp.code }}</span>
-                    <h4 class="h6 fw-bold">{{ comp.nom }}</h4>
+    {% for s in semestres %}
+        <div class="mb-5">
+            <h2 class="text-danger border-bottom border-secondary pb-2">{{ s.nom }}</h2>
+            
+            {% for b in s.blocs %}
+                <div class="ms-3 mb-4">
+                    <h4 class="text-white-50">📂 {{ b.nom }}</h4>
                     
-                    <!-- Affichage du niveau d'acquisition -->
-                    <p class="small mb-0">
-                      Niveau : <strong>{{ comp.niveau }}</strong>
-                    </p>
-                    
-                    <!-- Barre de progression visuelle selon le niveau -->
-                    <div class="progress mt-2" style="height: 10px;">
-                      {% if comp.niveau == 'expert' %}
-                        <div class="progress-bar bg-success" style="width: 100%"></div>
-                      {% elif comp.niveau == 'acquis' %}
-                        <div class="progress-bar bg-info" style="width: 75%"></div>
-                      {% elif comp.niveau == 'presque acquis' %}
-                        <div class="progress-bar bg-warning" style="width: 50%"></div>
-                      {% else %}
-                        <div class="progress-bar bg-secondary" style="width: 25%"></div>
-                      {% endif %}
+                    <div class="row mt-3">
+                        {% for comp in b.competences %}
+                            <div class="col-md-4">
+                                <div class="card border-danger mb-3" style="background-color: #1a1a1a !important; border-width: 2px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-danger fw-bold">{{ comp.code }}</h5>
+                                        <p class="card-text text-white">{{ comp.nom }}</p>
+                                        
+                                        <div class="progress bg-secondary" style="height: 10px;">
+                                            {% set pct = {'acquis': 100, 'en cours': 50, 'non acquis': 10}.get(comp.niveau, 0) %}
+                                            <div class="progress-bar bg-danger" style="width: {{ pct }}%"></div>
+                                        </div>
+                                        <small class="text-secondary mt-2 d-block">Niveau : {{ comp.niveau }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <p class="text-muted ms-3">Aucune compétence dans ce bloc.</p>
+                        {% endfor %}
                     </div>
-                  </div>
                 </div>
-              {% endfor %}
-            </div>
-          </div>
+            {% endfor %}
         </div>
-      {% endfor %}
-      
     {% else %}
-      <p class="text-center">Aucune compétence enregistrée pour le moment.</p>
+        <div class="text-center mt-5">
+            <p class="fs-4 text-secondary">La base de données est vide.</p>
+            <p>Va dans l'espace <a href="{{ url_for('admin_dashboard') }}" class="text-danger">Admin</a> pour créer ton premier semestre !</p>
+        </div>
     {% endfor %}
-
-  </div>
 </div>
 {% endblock %}
