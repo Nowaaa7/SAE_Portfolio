@@ -40,7 +40,7 @@ def index():
     # On remplace le fichier JSON par un dictionnaire Python direct
     profil_data = {
         "nom": "Noa Jodry",
-        "email": "noajodry7@gmail.com",
+        "email": "jodrynoa7@gmail.com",
         "bio": "Étudiant en BUT Réseaux & Télécommunications. Curieux des architectures réseau.",
         "github": "https://github.com/Nowaaa7",
         "linkedin": "https://www.linkedin.com/in/noa-jodry/"
