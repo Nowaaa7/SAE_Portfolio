@@ -93,6 +93,10 @@ def delete_skill(id):
     db.session.delete(comp)
     db.session.commit()
     # Message de confirmation (optionnel)
+    return redirect(url_for('admin_dashboard'))
+    db.session.delete(comp)
+    db.session.commit()
+    flash("🗑️ Compétence supprimée.", "danger") # <-- LIGNE À AJOUTER
     return redirect(url_for('admin_dashboard'))    
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -183,6 +187,54 @@ def add_skill():
     db.session.add(nouvelle_comp)
     db.session.commit()
     return redirect(url_for('admin_dashboard'))
+    db.session.add(nouvelle_comp)
+    db.session.commit()
+    flash("✅ La compétence a bien été ajoutée !", "success") # <-- LIGNE À AJOUTER
+    return redirect(url_for('admin_dashboard'))
+
+@app.route('/edit_skill/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_skill(id):
+    comp = Competence.query.get_or_404(id)
+    blocs = Bloc.query.all()
+    
+    if request.method == 'POST':
+        # Mise à jour des infos de base
+        comp.code = request.form.get('code')
+        comp.nom = request.form.get('nom')
+        comp.niveau = request.form.get('niveau')
+        comp.bloc_id = request.form.get('bloc_id')
+        
+        # Mise à jour des textes TinyMCE
+        comp.ce_que_jai_fait = request.form.get('ce_que_jai_fait')
+        comp.pourquoi = request.form.get('pourquoi')
+        comp.comment = request.form.get('comment')
+        comp.difficultes = request.form.get('difficultes')
+        comp.appris = request.form.get('appris')
+        comp.autrement = request.form.get('autrement')
+        
+        # Mise à jour des images (seulement si on en choisit de nouvelles)
+        if 'image1' in request.files:
+            img1 = request.files['image1']
+            if img1.filename != '':
+                filename1 = secure_filename(img1.filename)
+                img1.save(os.path.join(app.config['UPLOAD_FOLDER'], filename1))
+                comp.image1 = filename1
+                
+        if 'image2' in request.files:
+            img2 = request.files['image2']
+            if img2.filename != '':
+                filename2 = secure_filename(img2.filename)
+                img2.save(os.path.join(app.config['UPLOAD_FOLDER'], filename2))
+                comp.image2 = filename2
+        
+        db.session.commit()
+        return redirect(url_for('admin_dashboard'))
+        
+    return render_template('edit_skill.html', comp=comp, blocs=blocs)
+    db.session.commit()
+        flash("✏️ La compétence a été modifiée avec succès !", "success") # <-- LIGNE À AJOUTER
+        return redirect(url_for('admin_dashboard'))
 
 if __name__ == '__main__':
     app.run(debug=True)
