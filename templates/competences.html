@@ -6,7 +6,22 @@
         <h1 class="text-danger fw-bold">Mes Compétences & AC</h1>
         <p class="text-white-50">Analyse détaillée de mes Apprentissages Critiques selon le référentiel BUT R&T.</p>
     </header>
+    <header class="text-center mb-5">
+        <h1 class="text-danger fw-bold">Mes Compétences & AC</h1>
+        <p class="text-white-50">Analyse détaillée de mes Apprentissages Critiques selon le référentiel BUT R&T.</p>
+    </header>
 
+    <div class="text-center mb-5" data-aos="fade-in">
+        <div class="btn-group" role="group" id="filter-buttons">
+            <button type="button" class="btn btn-outline-danger active" data-filter="all">Tout</button>
+            <button type="button" class="btn btn-outline-success" data-filter="expert">Expert</button>
+            <button type="button" class="btn btn-outline-info" data-filter="acquis">Acquis</button>
+            <button type="button" class="btn btn-outline-warning" data-filter="en cours">En cours</button>
+            <button type="button" class="btn btn-outline-secondary" data-filter="non acquis">Non acquis</button>
+        </div>
+    </div>
+
+<div class="accordion-item bg-dark border-secondary mb-2 skill-item" data-niveau="{{ comp.niveau }}" style="border: 1px solid #444;">
     <div class="row justify-content-center">
         <div class="col-lg-10">
             {% for semestre in semestres %}
@@ -15,14 +30,14 @@
                 </h2>
 
                 {% for bloc in semestre.blocs %}
-                    <div class="mt-4 mb-5">
+                    <div class="mt-4 mb-5" data-aos="fade-up">
                         <h3 class="text-white mb-4 border-start border-danger border-4 ps-3">
                             Compétence : {{ bloc.nom }}
                         </h3>
 
                         <div class="accordion accordion-flush" id="accordionBloc{{ bloc.id }}">
                             {% for comp in bloc.competences %}
-                                <div class="accordion-item bg-dark border-secondary mb-2" style="border: 1px solid #444;">
+                                <div class="accordion-item bg-dark border-secondary mb-2 skill-item" data-niveau="{{ comp.niveau }}" style="border: 1px solid #444;">
                                     
                                     <h2 class="accordion-header" id="heading{{ comp.id }}">
                                         <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ comp.id }}" aria-expanded="false" aria-controls="collapse{{ comp.id }}" style="box-shadow: none;">
@@ -97,4 +112,35 @@
         filter: brightness(0) invert(1);
     }
 </style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const buttons = document.querySelectorAll('#filter-buttons .btn');
+        const skills = document.querySelectorAll('.skill-item');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 1. Changer le bouton actif visuellement
+                buttons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // 2. Récupérer le filtre choisi
+                const filterValue = button.getAttribute('data-filter');
+
+                // 3. Afficher ou cacher les compétences
+                skills.forEach(skill => {
+                    if (filterValue === 'all' || skill.getAttribute('data-niveau') === filterValue) {
+                        skill.style.display = 'block';
+                        // Relancer l'animation AOS si on veut être pointilleux
+                        skill.classList.remove('aos-animate');
+                        setTimeout(() => skill.classList.add('aos-animate'), 50);
+                    } else {
+                        skill.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+
 {% endblock %}
