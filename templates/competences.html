@@ -6,12 +6,8 @@
         <h1 class="text-danger fw-bold">Mes Compétences & AC</h1>
         <p class="text-white-50">Analyse détaillée de mes Apprentissages Critiques selon le référentiel BUT R&T.</p>
     </header>
-    <header class="text-center mb-5">
-        <h1 class="text-danger fw-bold">Mes Compétences & AC</h1>
-        <p class="text-white-50">Analyse détaillée de mes Apprentissages Critiques selon le référentiel BUT R&T.</p>
-    </header>
 
-    <div class="text-center mb-5">
+    <div class="text-center mb-5 fade-up-css">
         <div class="btn-group" role="group">
             <a href="{{ url_for('competences_page', filtre='all') }}" class="btn btn-outline-danger {% if filtre == 'all' %}active{% endif %}">Tout</a>
             <a href="{{ url_for('competences_page', filtre='expert') }}" class="btn btn-outline-success {% if filtre == 'expert' %}active{% endif %}">Expert</a>
@@ -21,71 +17,68 @@
         </div>
     </div>
 
-<div class="accordion-item bg-dark border-secondary mb-2 skill-item" data-niveau="{{ comp.niveau }}" style="border: 1px solid #444;">
     <div class="row justify-content-center">
         <div class="col-lg-10">
             {% for semestre in semestres %}
-                <h2 class="mt-5 text-uppercase text-danger border-bottom border-danger pb-2">
+                <h2 class="mt-5 text-uppercase text-danger border-bottom border-danger pb-2 fade-up-css">
                     {{ semestre.nom }}
                 </h2>
 
                 {% for bloc in semestre.blocs %}
-                    <div class="mt-4 mb-5" class="fade-up-css">
+                    <div class="mt-4 mb-5 fade-up-css">
                         <h3 class="text-white mb-4 border-start border-danger border-4 ps-3">
                             Compétence : {{ bloc.nom }}
                         </h3>
 
                         <div class="accordion accordion-flush" id="accordionBloc{{ bloc.id }}">
                             {% for comp in bloc.competences %}
+                            
                                 {% if filtre == 'all' or filtre == comp.niveau %}
                                     <div class="accordion-item bg-dark border-secondary mb-2" style="border: 1px solid #444;">
-                                      </div>
-                                  {% endif %}
-                                {% endfor %}
-                                    
-                                    <h2 class="accordion-header" id="heading{{ comp.id }}">
-                                        <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ comp.id }}" aria-expanded="false" aria-controls="collapse{{ comp.id }}" style="box-shadow: none;">
-                                            <strong>{{ comp.code }}</strong> &nbsp;| {{ comp.nom }}
-                                        </button>
-                                    </h2>
-                                    
-                                    <div id="collapse{{ comp.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ comp.id }}" data-bs-parent="#accordionBloc{{ bloc.id }}">
-                                        <div class="accordion-body text-light" style="background-color: #111;">
-                                            
-                                            <div class="mb-4">
-                                                <span class="badge bg-danger p-2 fs-6">Niveau évalué : {{ comp.niveau }}</span>
-                                            </div>
-
-                                            {% if comp.ce_que_jai_fait %}<div class="mb-3"><strong>Ce que j'ai fait :</strong><br> {{ comp.ce_que_jai_fait | safe }}</div>{% endif %}
-                                            {% if comp.pourquoi %}<div class="mb-3"><strong>Pourquoi je l'ai fait :</strong><br> {{ comp.pourquoi | safe }}</div>{% endif %}
-                                            {% if comp.comment %}<div class="mb-3"><strong>Comment je l'ai fait :</strong><br> {{ comp.comment | safe }}</div>{% endif %}
-                                            {% if comp.difficultes %}<div class="mb-3"><strong>Mes difficultés :</strong><br> {{ comp.difficultes | safe }}</div>{% endif %}
-                                            {% if comp.appris %}<div class="mb-3"><strong>Ce que j'en ai appris :</strong><br> {{ comp.appris | safe }}</div>{% endif %}
-                                            {% if comp.autrement %}<div class="mb-3"><strong>Ce que je ferais autrement :</strong><br> {{ comp.autrement | safe }}</div>{% endif %}
-
-                                            {% if comp.image1 or comp.image2 %}
-                                                <div class="card mt-4 bg-transparent border-secondary p-3">
-                                                    <h5 class="text-danger mb-4">📸 Traces ciblées :</h5>
-                                                    <div class="row">
-                                                        {% if comp.image1 %}
-                                                        <div class="col-md-6 text-center mb-3">
-                                                            <img src="{{ url_for('static', filename='uploads/' + comp.image1) }}" class="img-fluid rounded border border-secondary shadow" alt="Trace 1">
-                                                        </div>
-                                                        {% endif %}
-                                                        
-                                                        {% if comp.image2 %}
-                                                        <div class="col-md-6 text-center mb-3">
-                                                            <img src="{{ url_for('static', filename='uploads/' + comp.image2) }}" class="img-fluid rounded border border-secondary shadow" alt="Trace 2">
-                                                        </div>
-                                                        {% endif %}
-                                                    </div>
+                                        
+                                        <h2 class="accordion-header" id="heading{{ comp.id }}">
+                                            <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ comp.id }}" aria-expanded="false" aria-controls="collapse{{ comp.id }}" style="box-shadow: none;">
+                                                <strong>{{ comp.code }}</strong> &nbsp;| {{ comp.nom }}
+                                            </button>
+                                        </h2>
+                                        
+                                        <div id="collapse{{ comp.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ comp.id }}" data-bs-parent="#accordionBloc{{ bloc.id }}">
+                                            <div class="accordion-body text-light" style="background-color: #111;">
+                                                
+                                                <div class="mb-4">
+                                                    <span class="badge bg-danger p-2 fs-6">Niveau évalué : {{ comp.niveau }}</span>
                                                 </div>
-                                            {% endif %}
 
+                                                {% if comp.ce_que_jai_fait %}<p><strong>Ce que j'ai fait :</strong><br> {{ comp.ce_que_jai_fait }}</p>{% endif %}
+                                                {% if comp.pourquoi %}<p><strong>Pourquoi je l'ai fait :</strong><br> {{ comp.pourquoi }}</p>{% endif %}
+                                                {% if comp.comment %}<p><strong>Comment je l'ai fait :</strong><br> {{ comp.comment }}</p>{% endif %}
+                                                {% if comp.difficultes %}<p><strong>Mes difficultés :</strong><br> {{ comp.difficultes }}</p>{% endif %}
+                                                {% if comp.appris %}<p><strong>Ce que j'en ai appris :</strong><br> {{ comp.appris }}</p>{% endif %}
+                                                {% if comp.autrement %}<p><strong>Ce que je ferais autrement :</strong><br> {{ comp.autrement }}</p>{% endif %}
+
+                                                {% if comp.image1 or comp.image2 %}
+                                                    <div class="card mt-4 bg-transparent border-secondary p-3">
+                                                        <h5 class="text-danger mb-4">📸 Traces ciblées :</h5>
+                                                        <div class="row">
+                                                            {% if comp.image1 %}
+                                                            <div class="col-md-6 text-center mb-3">
+                                                                <img src="{{ url_for('static', filename='uploads/' + comp.image1) }}" class="img-fluid rounded border border-secondary shadow" alt="Trace 1">
+                                                            </div>
+                                                            {% endif %}
+                                                            
+                                                            {% if comp.image2 %}
+                                                            <div class="col-md-6 text-center mb-3">
+                                                                <img src="{{ url_for('static', filename='uploads/' + comp.image2) }}" class="img-fluid rounded border border-secondary shadow" alt="Trace 2">
+                                                            </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% else %}
+                                {% endif %} {% else %}
                                 <p class="text-muted">Aucun Apprentissage Critique (AC) créé dans ce bloc.</p>
                             {% endfor %}
                         </div>
@@ -102,19 +95,9 @@
 </div>
 
 <style>
-    /* Met la flèche en blanc au lieu de noir */
-    .accordion-button::after {
-        filter: invert(1);
-    }
-    /* Quand l'accordéon est ouvert, le fond devient rouge et le texte blanc */
-    .accordion-button:not(.collapsed) {
-        background-color: #dc3545 !important;
-        color: white !important;
-    }
-    /* Flèche blanche quand c'est ouvert */
-    .accordion-button:not(.collapsed)::after {
-        filter: brightness(0) invert(1);
-    }
+    /* Style pour l'accordéon */
+    .accordion-button::after { filter: invert(1); }
+    .accordion-button:not(.collapsed) { background-color: #dc3545 !important; color: white !important; }
+    .accordion-button:not(.collapsed)::after { filter: brightness(0) invert(1); }
 </style>
-
 {% endblock %}
