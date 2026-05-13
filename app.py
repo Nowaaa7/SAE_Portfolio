@@ -51,13 +51,10 @@ def portfolio():
 
 @app.route('/competences')
 def competences_page():
-    from models import Semestre, Competence
-    # On récupère les semestres (qui contiennent les blocs, qui contiennent les compétences)
+    from models import Semestre, Bloc, Competence
     semestres = Semestre.query.all()
-    # Ou si ton template boucle sur 'competences' directement :
-    competences = Competence.query.all()
-    
-    return render_template('competences.html', semestres=semestres, competences=competences)
+    # Il est CRUCIAL que 'semestres' soit écrit ici :
+    return render_template('competences.html', semestres=semestres)
 
 @app.route('/mentions_legales')
 def mentions_legales():
@@ -67,9 +64,11 @@ def mentions_legales():
 @login_required
 def admin_dashboard():
     semestres = Semestre.query.all()
-    # On affiche aussi les blocs pour le formulaire d'ajout
-    blocs = Bloc.query.all() 
-    return render_template('admin.html', semestres=semestres, blocs=blocs)
+    blocs = Bloc.query.all()
+    competences = Competence.query.all()  # <-- LIGNE MANQUANTE AJOUTÉE ICI
+    
+    # On ajoute competences=competences à la fin pour les envoyer au tableau
+    return render_template('admin.html', semestres=semestres, blocs=blocs, competences=competences)
 
 # Route pour modifier le niveau d'une compétence existante
 @app.route('/update_skill/<int:id>', methods=['POST'])
