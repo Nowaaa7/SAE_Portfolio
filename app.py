@@ -58,9 +58,11 @@ def portfolio():
 @app.route('/competences')
 def competences_page():
     from models import Semestre, Bloc, Competence
+    # On récupère le filtre dans l'URL (par défaut "all")
+    filtre = request.args.get('filtre', 'all')
     semestres = Semestre.query.all()
-    # Il est CRUCIAL que 'semestres' soit écrit ici :
-    return render_template('competences.html', semestres=semestres)
+    
+    return render_template('competences.html', semestres=semestres, filtre=filtre)
 
 @app.route('/mentions_legales')
 def mentions_legales():
@@ -253,6 +255,6 @@ def send_message():
     
     # 4. On renvoie l'utilisateur sur la page d'accueil
     return redirect(url_for('index'))
-    
+
 if __name__ == '__main__':
     app.run(debug=True)
