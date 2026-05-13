@@ -3,6 +3,7 @@ from models import db, User, Semestre, Bloc, Competence
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask import request, redirect, url_for, flash
 from werkzeug.security import check_password_hash
+from werkzeug.utils import secure_filename
 import json
 import os
 
@@ -26,6 +27,11 @@ with app.app_context():
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+# Dossier où seront sauvegardées les images envoyées depuis l'admin
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # --- ROUTES DES PAGES STATIQUES ---
 
@@ -137,12 +143,43 @@ def add_block():
 @app.route('/add_skill', methods=['POST'])
 @login_required
 def add_skill():
+    # 1. On récupère les infos de base
+    bloc_id = request.form.get('bloc_id')
     code = request.form.get('code')
     nom = request.form.get('nom')
     niveau = request.form.get('niveau')
-    bloc_id = request.form.get('bloc_id') # On récupère le bloc choisi
     
-    nouvelle_comp = Competence(code=code, nom=nom, niveau=niveau, bloc_id=bloc_id)
+    # 2. On récupère les textes détaillés
+    fait = request.form.get('ce_que_jai_fait')
+    pourquoi = request.form.get('pourquoi')
+    comment = request.form.get('comment')
+    diff = request.form.get('difficultes')
+    appris = request.form.get('appris')
+    autrement = request.form.get('autrement')
+    
+    # 3. Gestion des images
+    image1_filename = None
+    image2_filename = None
+    
+    if 'image1' in request.files:
+        img1 = request.files['image1']
+        if img1.filename != '':
+            image1_filename = secure_filename(img1.filename)
+            img1.save(os.path.join(app.config['UPLOAD_FOLDER'], image1_filename))
+            
+    if 'image2' in request.files:
+        img2 = request.files['image2']
+        if img2.filename != '':
+            image2_filename = secure_filename(img2.filename)
+            img2.save(os.path.join(app.config['UPLOAD_FOLDER'], image2_filename))
+
+    # 4. On sauvegarde le tout dans la base de données
+    nouvelle_comp = Competence(
+        code=code, nom=nom, niveau=niveau, bloc_id=bloc_id,
+        ce_que_jai_fait=fait, pourquoi=pourquoi, comment=comment,
+        difficultes=diff, appris=appris, autrement=autrement,
+        image1=image1_filename, image2=image2_filename
+    )
     db.session.add(nouvelle_comp)
     db.session.commit()
     return redirect(url_for('admin_dashboard'))

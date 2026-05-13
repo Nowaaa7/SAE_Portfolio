@@ -21,7 +21,20 @@ class Bloc(db.Model):
 
 class Competence(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(20), nullable=False) # ex: AC11.01
-    nom = db.Column(db.String(500), nullable=False)
-    niveau = db.Column(db.String(100), default="non acquis") # Niveaux requis : non acquis, expert, etc.
+    code = db.Column(db.String(20), nullable=False)
+    nom = db.Column(db.String(200), nullable=False)
+    niveau = db.Column(db.String(50))
     bloc_id = db.Column(db.Integer, db.ForeignKey('bloc.id'), nullable=False)
+    
+    # --- LES NOUVEAUX TEXTES DÉTAILLÉS ---
+    ce_que_jai_fait = db.Column(db.Text, nullable=True)
+    pourquoi = db.Column(db.Text, nullable=True)
+    comment = db.Column(db.Text, nullable=True)
+    difficultes = db.Column(db.Text, nullable=True)
+    appris = db.Column(db.Text, nullable=True)
+    autrement = db.Column(db.Text, nullable=True)
+    
+    # --- LES IMAGES (Traces ciblées) ---
+    # On stockera le nom du fichier image (ex: "script_ad.png")
+    image1 = db.Column(db.String(200), nullable=True)
+    image2 = db.Column(db.String(200), nullable=True)

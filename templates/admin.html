@@ -36,23 +36,39 @@
 
         <div class="col-md-4 mb-4">
             <div class="card bg-dark border-danger h-100">
-                <div class="card-header border-danger text-danger fw-bold">3. Ajouter une Compétence</div>
-                <div class="card-body">
-                    <form action="{{ url_for('add_skill') }}" method="POST">
+                <div class="card-header border-danger text-danger fw-bold">3. Ajouter une Compétence Détaillée</div>
+                <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                    <form action="{{ url_for('add_skill') }}" method="POST" enctype="multipart/form-data">
                         <select name="bloc_id" class="form-select bg-dark text-white border-secondary mb-2" required>
                             <option value="">Choisir le Bloc...</option>
                             {% for b in blocs %}
                             <option value="{{ b.id }}">{{ b.semestre.nom }} - {{ b.nom }}</option>
                             {% endfor %}
                         </select>
-                        <input type="text" name="code" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Code (AC 11.01)" required>
-                        <input type="text" name="nom" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Nom compétence" required>
+                        <input type="text" name="code" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Code (ex: AC11.01)" required>
+                        <input type="text" name="nom" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Nom de l'AC" required>
                         <select name="niveau" class="form-select bg-dark text-white border-secondary mb-2">
                             <option value="non acquis">Non acquis</option>
                             <option value="en cours">En cours</option>
                             <option value="acquis">Acquis</option>
+                            <option value="expert">Expert</option>
                         </select>
-                        <button class="btn btn-success w-100">Ajouter</button>
+                        
+                        <hr class="border-secondary">
+                        <h6 class="text-danger">Détails de l'expérience (Optionnels)</h6>
+                        <textarea name="ce_que_jai_fait" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Ce que j'ai fait..." rows="2"></textarea>
+                        <textarea name="pourquoi" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Pourquoi je l'ai fait..." rows="2"></textarea>
+                        <textarea name="comment" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Comment je l'ai fait..." rows="2"></textarea>
+                        <textarea name="difficultes" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Mes difficultés..." rows="2"></textarea>
+                        <textarea name="appris" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Ce que j'en ai appris..." rows="2"></textarea>
+                        <textarea name="autrement" class="form-control bg-dark text-white border-secondary mb-2" placeholder="Ce que je ferais autrement..." rows="2"></textarea>
+                        
+                        <hr class="border-secondary">
+                        <h6 class="text-danger">Images / Traces ciblées</h6>
+                        <input type="file" name="image1" class="form-control bg-dark text-white border-secondary mb-2" accept="image/*">
+                        <input type="file" name="image2" class="form-control bg-dark text-white border-secondary mb-3" accept="image/*">
+                        
+                        <button class="btn btn-success w-100">Ajouter l'AC</button>
                     </form>
                 </div>
             </div>
@@ -83,6 +99,7 @@
                                 <option value="non acquis" {% if comp.niveau == 'non acquis' %}selected{% endif %}>Non acquis</option>
                                 <option value="en cours" {% if comp.niveau == 'en cours' %}selected{% endif %}>En cours</option>
                                 <option value="acquis" {% if comp.niveau == 'acquis' %}selected{% endif %}>Acquis</option>
+                                <option value="expert" {% if comp.niveau == 'expert' %}selected{% endif %}>Expert</option>
                             </select>
                             <button class="btn btn-warning btn-sm">OK</button>
                         </form>
