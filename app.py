@@ -229,12 +229,10 @@ def edit_skill(id):
                 comp.image2 = filename2
         
         db.session.commit()
+        flash("✏️ La compétence a été modifiée avec succès !", "success")
         return redirect(url_for('admin_dashboard'))
         
     return render_template('edit_skill.html', comp=comp, blocs=blocs)
-    db.session.commit()
-        flash("✏️ La compétence a été modifiée avec succès !", "success") # <-- LIGNE À AJOUTER
-        return redirect(url_for('admin_dashboard'))
 
 if __name__ == '__main__':
     app.run(debug=True)
