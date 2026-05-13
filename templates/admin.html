@@ -115,4 +115,17 @@
         </table>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea', /* Transforme tous les textarea en éditeur */
+        plugins: 'lists link', /* Permet de faire des listes et des liens */
+        toolbar: 'undo redo | bold italic underline | bullist numlist | link',
+        menubar: false,
+        skin: 'oxide-dark', /* Thème sombre pour ton design */
+        content_css: 'dark',
+        height: 200,
+        branding: false
+    });
+</script>
 {% endblock %}

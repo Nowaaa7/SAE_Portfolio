@@ -37,12 +37,12 @@
                                                 <span class="badge bg-danger p-2 fs-6">Niveau évalué : {{ comp.niveau }}</span>
                                             </div>
 
-                                            {% if comp.ce_que_jai_fait %}<p><strong>Ce que j'ai fait :</strong> {{ comp.ce_que_jai_fait }}</p>{% endif %}
-                                            {% if comp.pourquoi %}<p><strong>Pourquoi je l'ai fait :</strong> {{ comp.pourquoi }}</p>{% endif %}
-                                            {% if comp.comment %}<p><strong>Comment je l'ai fait :</strong> {{ comp.comment }}</p>{% endif %}
-                                            {% if comp.difficultes %}<p><strong>Mes difficultés :</strong> {{ comp.difficultes }}</p>{% endif %}
-                                            {% if comp.appris %}<p><strong>Ce que j'en ai appris :</strong> {{ comp.appris }}</p>{% endif %}
-                                            {% if comp.autrement %}<p><strong>Ce que je ferais autrement :</strong> {{ comp.autrement }}</p>{% endif %}
+                                            {% if comp.ce_que_jai_fait %}<div class="mb-3"><strong>Ce que j'ai fait :</strong><br> {{ comp.ce_que_jai_fait | safe }}</div>{% endif %}
+                                            {% if comp.pourquoi %}<div class="mb-3"><strong>Pourquoi je l'ai fait :</strong><br> {{ comp.pourquoi | safe }}</div>{% endif %}
+                                            {% if comp.comment %}<div class="mb-3"><strong>Comment je l'ai fait :</strong><br> {{ comp.comment | safe }}</div>{% endif %}
+                                            {% if comp.difficultes %}<div class="mb-3"><strong>Mes difficultés :</strong><br> {{ comp.difficultes | safe }}</div>{% endif %}
+                                            {% if comp.appris %}<div class="mb-3"><strong>Ce que j'en ai appris :</strong><br> {{ comp.appris | safe }}</div>{% endif %}
+                                            {% if comp.autrement %}<div class="mb-3"><strong>Ce que je ferais autrement :</strong><br> {{ comp.autrement | safe }}</div>{% endif %}
 
                                             {% if comp.image1 or comp.image2 %}
                                                 <div class="card mt-4 bg-transparent border-secondary p-3">
