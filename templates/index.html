@@ -40,4 +40,37 @@
     </div>
   </div>
 </section>
+<div class="mt-5 pt-5 mb-5 border-top border-danger" data-aos="fade-up">
+        <h2 class="text-danger fw-bold mb-4">Me Contacter</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <p class="text-white-50">
+                    Vous êtes intéressé par mon profil ? N'hésitez pas à m'envoyer un message directement via ce formulaire. Je vous répondrai dans les plus brefs délais.
+                </p>
+                <ul class="list-unstyled mt-4 fs-5">
+                    <li class="mb-3">📧 <a href="mailto:{{ profil.email }}" class="text-white text-decoration-none">{{ profil.email }}</a></li>
+                    <li class="mb-3">💼 <a href="{{ profil.linkedin }}" target="_blank" class="text-white text-decoration-none">Mon Profil LinkedIn</a></li>
+                    <li class="mb-3">🐙 <a href="{{ profil.github }}" target="_blank" class="text-white text-decoration-none">Mon GitHub</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-6">
+                <form action="{{ url_for('send_message') }}" method="POST" class="card bg-dark border-danger p-4 shadow-lg">
+                    <div class="mb-3">
+                        <label class="text-danger fw-bold">Nom complet</label>
+                        <input type="text" name="nom" class="form-control bg-dark text-white border-secondary" placeholder="John Doe" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-danger fw-bold">Adresse E-mail</label>
+                        <input type="email" name="email" class="form-control bg-dark text-white border-secondary" placeholder="john@exemple.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-danger fw-bold">Message</label>
+                        <textarea name="message" class="form-control bg-dark text-white border-secondary" rows="4" placeholder="Votre message..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger w-100 fw-bold fs-5">Envoyer le message 🚀</button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -234,5 +234,25 @@ def edit_skill(id):
         
     return render_template('edit_skill.html', comp=comp, blocs=blocs)
 
+@app.route('/send_message', methods=['POST'])
+def send_message():
+    # 1. On récupère ce que l'utilisateur a tapé
+    nom = request.form.get('nom')
+    email = request.form.get('email')
+    message = request.form.get('message')
+    
+    # 2. Simulation de réception (Ça va s'afficher dans ton terminal Docker !)
+    print("\n" + "="*50)
+    print(f"📩 NOUVEAU MESSAGE REÇU SUR LE PORTFOLIO !")
+    print(f"👤 De : {nom} ({email})")
+    print(f"💬 Message : {message}")
+    print("="*50 + "\n")
+    
+    # 3. On affiche la bulle de confirmation grâce aux Flash Messages créés tout à l'heure
+    flash(f"🚀 Merci {nom} ! Votre message a bien été envoyé. Je vous réponds très vite.", "success")
+    
+    # 4. On renvoie l'utilisateur sur la page d'accueil
+    return redirect(url_for('index'))
+    
 if __name__ == '__main__':
     app.run(debug=True)
