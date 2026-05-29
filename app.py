@@ -9,8 +9,6 @@ import os
 
 app = Flask(__name__)
 
-# Pour le développement, on peut utiliser SQLite. 
-# On passera sur PostgreSQL quand on fera le Docker (Séance 1/4)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SECRET_KEY'] = 'une_cle_secrete_provisoire'
 login_manager = LoginManager()
